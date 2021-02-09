@@ -17,6 +17,7 @@ session_start();
 
 //Require the auto autoload file
 require_once('vendor/autoload.php');
+require_once('model/data-layer.php');
 
 //Create an instance of the Base class
 $f3 = Base::instance();
@@ -29,13 +30,21 @@ $f3->route('GET /', function(){
 });
 
 //Define an order1 route
-$f3->route('GET /order', function(){
+$f3->route('GET /order', function($f3){
+
+//    $meals = getMeals();
+//    var_dump($meals);
+    $f3->set('meals', getMeals());
+
+    //Display a view
     $view = new Template();
     echo $view->render('views/form1.html');
 });
 
 //Define an order2 route
-$f3->route('POST /order2', function(){
+$f3->route('POST /order2', function($f3){
+
+    $f3->set('condiments', getCondiments());
 
     //add data from form1 to session array
     //var_dump($_POST);
